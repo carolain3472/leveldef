@@ -173,12 +173,19 @@
 
 <body id="page-home" class="">
     
-    	<!-- Botón de traducción -->
+	<!-- Botón de traducción -->
 	<div id="google_translate_element"></div>
 	<script type="text/javascript">
 		function googleTranslateElementInit() {
-			// Establecer el idioma predeterminado en hindi
-			new google.translate.TranslateElement({pageLanguage: 'hi', includedLanguages: 'hi,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: true, multilanguagePage: true});
+			// Obtener el idioma seleccionado por el usuario de la cookie
+			var language = getCookie("language");
+			if (language) {
+				// Si se ha seleccionado un idioma anteriormente, establecerlo como idioma predeterminado
+				new google.translate.TranslateElement({pageLanguage: language, includedLanguages: 'hi,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: true, multilanguagePage: true});
+			} else {
+				// Si no se ha seleccionado ningún idioma anteriormente, establecer el idioma predeterminado en hindi
+				new google.translate.TranslateElement({pageLanguage: 'hi', includedLanguages: 'hi,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: true, multilanguagePage: true});
+			}
 			
 			// Almacenar el idioma seleccionado por el usuario en una cookie
 			function googleTranslateChange() {
