@@ -173,12 +173,21 @@
 
 <body id="page-home" class="">
     
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Traductor de sitio web</title>
+</head>
+<body>
+	<h1>Bienvenido a mi sitio web</h1>
+	<p>Este es el contenido de mi sitio web en español.</p>
+	
 	<!-- Botón de traducción -->
 	<div id="google_translate_element"></div>
 	<script type="text/javascript">
 		function googleTranslateElementInit() {
-			// Obtener el idioma seleccionado por el usuario de la cookie
-			var language = getCookie("language");
+			// Obtener el idioma seleccionado por el usuario del almacenamiento local
+			var language = localStorage.getItem("language");
 			if (language) {
 				// Si se ha seleccionado un idioma anteriormente, establecerlo como idioma predeterminado
 				new google.translate.TranslateElement({pageLanguage: language, includedLanguages: 'hi,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: true, multilanguagePage: true});
@@ -187,30 +196,19 @@
 				new google.translate.TranslateElement({pageLanguage: 'hi', includedLanguages: 'hi,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: true, multilanguagePage: true});
 			}
 			
-			// Almacenar el idioma seleccionado por el usuario en una cookie
+			// Almacenar el idioma seleccionado por el usuario en el almacenamiento local
 			function googleTranslateChange() {
 				var select = document.querySelector('.goog-te-combo');
 				var language = select.options[select.selectedIndex].value;
-				setCookie("language", language);
-			}
-			
-			// Función para leer el valor de una cookie
-			function getCookie(name) {
-				var value = "; " + document.cookie;
-				var parts = value.split("; " + name + "=");
-				if (parts.length == 2) return parts.pop().split(";").shift();
-			}
-			
-			// Función para establecer el valor de una cookie
-			function setCookie(name, value) {
-				var date = new Date();
-				date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
-				var expires = "; expires=" + date.toUTCString();
-				document.cookie = name + "=" + value + expires + "; path=/";
+				localStorage.setItem("language", language);
 			}
 		}
 	</script>
 	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit&key=AIzaSyBYKa3s4NaaaDwy8r9xLwQM7OBmL97zdlU"></script>
+	
+</body>
+</html>
+
     
   <div class="contain-page ">
                               
