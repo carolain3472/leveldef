@@ -173,7 +173,7 @@
 
 <body id="page-home" class="">
     
-	<!-- Botón de traducción -->
+<!-- Botón de traducción -->
 	<div id="google_translate_element"></div>
 	<script type="text/javascript">
 		function googleTranslateElementInit() {
@@ -193,9 +193,15 @@
 				var language = select.options[select.selectedIndex].value;
 				localStorage.setItem("language", language);
 			}
+
+			// Guardar el idioma seleccionado en el almacenamiento local antes de salir de la página
+			window.addEventListener('beforeunload', function() {
+				googleTranslateChange();
+			});
 		}
 	</script>
 	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit&key=AIzaSyBYKa3s4NaaaDwy8r9xLwQM7OBmL97zdlU"></script>
+	
 
     
   <div class="contain-page ">
