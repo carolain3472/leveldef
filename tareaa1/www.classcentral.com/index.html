@@ -155,14 +155,16 @@
 </script>
 
 <script type="text/javascript">
-  function googleTranslateElementInit() {
-    var userLang = getCookie('userLang') || 'hi';
-    new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: userLang, layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL, autoDisplay: true, gaTrack: true, gaId: 'UA-12345678-1'}, 'google_translate_element');
-    google.translate.addEventListener('langChange', function(event) {
-      document.cookie = 'userLang=' + event.target.parentElement.dataset.tl;
-    });
+ function googleTranslateElementInit() {
+    if (google.translate.isLoaded()) {
+      var userLang = getCookie('userLang') || 'hi';
+      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: userLang, layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL, autoDisplay: true, gaTrack: true, gaId: 'UA-12345678-1'}, 'google_translate_element');
+      google.translate.addEventListener('langChange', function(event) {
+        document.cookie = 'userLang=' + event.target.parentElement.dataset.tl;
+      });
+    }
   }
-
+    
   function getCookie(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
