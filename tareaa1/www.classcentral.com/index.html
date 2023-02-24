@@ -156,71 +156,31 @@
 
 
     
-     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     
-  <script>
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'hi,en', autoDisplay: true}, 'google_translate_element');
-    }
-  </script>
-
-
-<script>
-function toggleLanguage() {
-  const currentLanguage = localStorage.getItem('language');
-  const newLanguage = currentLanguage === 'en' ? 'hi' : 'en';
-  localStorage.setItem('language', newLanguage);
-  translateTo(newLanguage);
-}
-</script>
-    
-  <script>
-function translateTo(lang) {
-  const elements = document.querySelectorAll('[data-i18n]');
-  elements.forEach((element) => {
-    const key = element.dataset.i18n;
-    const translation = translations[lang][key];
-    if (translation) {
-      element.innerText = translation;
-    }
-  });
-  localStorage.setItem('language', lang);
-}
-
-</script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>  
     
 
 
 
 
-</head>
-    
-   <header>
-  <h1>Mi página web</h1>
-  <button id="languageBtn" onclick="toggleLanguage()">Cambiar idioma</button>
-</header>
 
-<body  onload="translateTo('hi')" id="page-home" class="">
+
+<body  id="page-home" class="">
     
-     
-    
-   <script>
-    function selectLanguage() {
-  var language = document.getElementById("language-selector").value;
-  var currentUrl = window.location.href;
-  var newUrl = currentUrl.replace("/en/", "/" + language + "/");
-  window.location.href = newUrl;
-}
-</script>
-    
-    
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#" id="en">English</a></li>
+        <li><a href="#" id="hi">हिंदी</a></li>
+      </ul>
+    </nav>
+  </header>
+ 
+
     
   <div class="contain-page ">
-      <div id="google_translate_element"></div>
-      <select id="language-selector" onchange="selectLanguage()">
-  <option value="en">English</option>
-  <option value="hi">Hindi</option>
-</select>
+
 
                               
         
@@ -5379,6 +5339,41 @@ function translateTo(lang) {
     })();
   </script>
   <noscript><p><img alt="Clicky" width="1" height="1" src="../in.getclicky.com/100717250ns.gif" /></p></noscript>
+    
+    
+  <script>
+    $(document).ready(function() {
+      // Set default language to English
+      var language = 'en';
+      
+      // Check if user previously selected Hindi as language
+      if(localStorage.getItem('language')) {
+        language = localStorage.getItem('language');
+      }
+      
+      // Load translation based on language
+      $.getJSON('https://translation.googleapis.com/language/translate/v2', {
+        'key': 'YOUR_API_KEY',
+        'source': 'en',
+        'target': language,
+        'q': $('body').text()
+      }, function(result) {
+        $('body').html(result.data.translations[0].translatedText);
+      });
+      
+      // Handle language selection
+      $('#en').click(function(e) {
+        e.preventDefault();
+        localStorage.setItem('language', 'en');
+        location.reload();
+      });
+      $('#hi').click(function(e) {
+        e.preventDefault();
+        localStorage.setItem('language', 'hi');
+        location.reload();
+      });
+    });
+  </script>
 
     </body>
 
